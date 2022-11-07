@@ -4,23 +4,9 @@ class Product_model extends CI_Model
 {
     public function count_product()
     {
-        // $query = $this->db->query("SELECT * FROM product LIMIT 20 ");
-        // $products = $query->result();
-        // if ($query) {
-        //     return $products;
-        // } else {
-        //     return false;
-        // }
+
         return $this->db->count_all('product');
     }
-    public function get_product($limit, $start)
-    {
-        $this->db->limit($limit, $start);
-        $query = $this->db->get('product');
-
-        return $query->result();
-    }
-
     public function getSearchResult($data)
     {
         $search = $data['searchByName'];
@@ -32,7 +18,26 @@ class Product_model extends CI_Model
             return false;
         }
     }
+    public function get_product($limit, $start, $search)
+    {
+        $this->db->limit($limit, $start);
+        $query = $this->db->get('product');
 
+        return $query->result();
+    }
+
+
+
+    public function getAllProduct()
+    {
+        $query = $this->db->query("SELECT * FROM product");
+        $products = $query->result();
+        if ($query) {
+            return $products;
+        } else {
+            return false;
+        }
+    }
     // public function getTotalProduct()
     // {
     //     $query = $this->db->query("SELECT SUM(amount) as totalAmount FROM product");

@@ -10,7 +10,7 @@
             <a href="<?php echo base_url('transaction'); ?>" class="btn btn-primary ">Create Transaction</a>
         </div>
         <div class="d-flex gap-2 ">
-            <form action="" method="post">
+            <form action="<?php echo base_url('product/searchByName'); ?>" method="post">
                 <div class="input-group mb-3">
                     <input type="text" id="SearchByName" name="SearchByName" class="form-control" placeholder="Search By Name" aria-label="Search By Name" aria-describedby="button-addon2">
                     <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
@@ -71,41 +71,73 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($products as $product) : ?>
-                <tr>
-                    <td><?php echo $product->id; ?></td>
-                    <td><?php echo $product->product_name; ?></td>
-                    <td>
-                        <?php echo $product->price; ?>
-                    </td>
-                    <td><?php echo $product->qty; ?></td>
-                    <td><?php echo $product->description; ?></td>
-                    <td class="d-flex gap-2">
+            <?php if (empty($searchItem)) : ?>
+                <?php foreach ($products as $product) : ?>
+                    <tr>
+                        <td><?php echo $product->id; ?></td>
+                        <td><?php echo $product->product_name; ?></td>
+                        <td>
+                            <?php echo $product->price; ?>
+                        </td>
+                        <td><?php echo $product->qty; ?></td>
+                        <td><?php echo $product->description; ?></td>
+                        <td class="d-flex gap-2">
 
-                        <input type="hidden" id="product_id" value="<?php echo $product->id; ?>">
-                        <input type="hidden" id="product_price" value="<?php echo $product->price; ?>">
+                            <input type="hidden" id="product_id" value="<?php echo $product->id; ?>">
+                            <input type="hidden" id="product_price" value="<?php echo $product->price; ?>">
 
-                        <!-- <a id="deleteProduct" data-id="<?php echo $product->id; ?>" class=" btn deleteBtn btn-sm btn-danger">Delete</a> -->
-                        <button type="button" class="btn btn-sm btn-success editBtn" data-id="<?php echo $product->id; ?>" data-bs-toggle="modal" data-bs-target="#priceModal">
-                            Edit
-                        </button>
-                        <form action="<?php echo base_url('product/delete'); ?>" method="post">
-                            <input type="hidden" name="deleteProduct_id" value="<?php echo $product->id; ?>">
-                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                        </form>
+                            <!-- <a id="deleteProduct" data-id="<?php echo $product->id; ?>" class=" btn deleteBtn btn-sm btn-danger">Delete</a> -->
+                            <button type="button" class="btn btn-sm btn-success editBtn" data-id="<?php echo $product->id; ?>" data-bs-toggle="modal" data-bs-target="#priceModal">
+                                Edit
+                            </button>
+                            <form action="<?php echo base_url('product/delete'); ?>" method="post">
+                                <input type="hidden" name="deleteProduct_id" value="<?php echo $product->id; ?>">
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
 
-                    </td>
+                        </td>
 
-                </tr>
-            <?php endforeach; ?>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else : ?>
+                <?php foreach ($searchItem as $search) : ?>
+                    <tr>
+                        <td><?php echo $search->id; ?></td>
+                        <td><?php echo $search->product_name; ?></td>
+                        <td>
+                            <?php echo $search->price; ?>
+                        </td>
+                        <td><?php echo $search->qty; ?></td>
+                        <td><?php echo $search->description; ?></td>
+                        <td class="d-flex gap-2">
+
+                            <input type="hidden" id="product_id" value="<?php echo $search->id; ?>">
+                            <input type="hidden" id="product_price" value="<?php echo $search->price; ?>">
+
+                            <!-- <a id="deleteProduct" data-id="<?php echo $search->id; ?>" class=" btn deleteBtn btn-sm btn-danger">Delete</a> -->
+                            <button type="button" class="btn btn-sm btn-success editBtn" data-id="<?php echo $search->id; ?>" data-bs-toggle="modal" data-bs-target="#priceModal">
+                                Edit
+                            </button>
+                            <form action="<?php echo base_url('product/delete'); ?>" method="post">
+                                <input type="hidden" name="deleteProduct_id" value="<?php echo $search->id; ?>">
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+
+                        </td>
+
+                    </tr>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </tbody>
+
+
 
     </table>
 
     <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-end">
+        <?php if (empty($searchItem)) : ?>
             <?php echo $links; ?>
-        </ul>
+        <?php endif; ?>
     </nav>
 </div>
 

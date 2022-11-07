@@ -15,17 +15,39 @@ class Page extends CI_Controller
                 $config = array();
                 $config["base_url"] = base_url('product');
                 $config["total_rows"] = $this->Product_model->count_product();
-                $config["per_page"] = 3;
+                $config["per_page"] = 2;
                 $config["uri_segment"] = 2;
+                $config['full_tag_open'] = '<ul class="pagination justify-content-end gap-2">';
+                $config['full_tag_close'] = '</ul>';
+                $config['first_link'] = false;
+                $config['last_link'] = false;
+
+
                 $config['first_tag_open'] = '<li class="page-item">';
                 $config['first_tag_close'] = '</li>';
-                $config['first_link'] = FALSE;
-                $config['prev_link'] = FALSE;
+
+                $config['prev_link'] = 'Prev';
+
+                $config['prev_tag_open'] = '<li class="prev">';
+                $config['prev_tag_close'] = '</li>';
+
+                $config['next_link'] = 'Next';
+                $config['next_tag_open'] = '<li class="page-item">';
+                $config['next_tag_close'] = '</li>';
+
+                $config['last_tag_open'] = '<li class="page-item">';
+                $config['last_tag_close'] = '</li>';
+
+                $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link" href="#">';
+                $config['cur_tag_close'] = '</a></li>';
+
+                $config['num_tag_open'] = '<li class="page-item">';
+                $config['num_tag_close'] = '</li>';
+                $config['full_tag_close'] = '</ul>';
 
 
-                // $config['display_pages'] = FALSE;
-                // $config["use_page_numbers"] = TRUE;
-                // $config["page_query_string"] = TRUE;
+
+
 
 
                 $this->pagination->initialize($config);
@@ -36,15 +58,7 @@ class Page extends CI_Controller
                 $data['products'] = $this->Product_model->get_product($config["per_page"], $page);
 
 
-                // $products = $this->Product_model->getAllProduct();
 
-                // $totalAmount = $this->Product_model->getTotalProduct();
-                // var_dump($totalAmount);
-                // $data = array(
-                //         'products' => $products,
-                //         // 'totalAmount' => $totalAmount,
-
-                // );
 
 
 
